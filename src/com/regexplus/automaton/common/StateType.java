@@ -3,5 +3,6 @@ package com.regexplus.automaton.common;
 public enum StateType {
     FINAL,
     EMPTY,
-    START
+    START,
+    AND
 }

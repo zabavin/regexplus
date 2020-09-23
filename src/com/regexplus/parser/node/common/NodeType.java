@@ -5,5 +5,6 @@ public enum NodeType {
     LETTER,
     CONCAT,
     CHOICE,
-    REPEAT
+    REPEAT,
+    AND
 }

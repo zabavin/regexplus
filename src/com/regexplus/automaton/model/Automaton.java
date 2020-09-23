@@ -1,6 +1,7 @@
 package com.regexplus.automaton.model;
 
 import com.regexplus.automaton.base.EdgeLetter;
+import com.regexplus.automaton.base.StateAnd;
 import com.regexplus.automaton.base.StateFinal;
 import com.regexplus.automaton.base.StateStart;
 import com.regexplus.automaton.common.*;
@@ -78,16 +79,23 @@ public class Automaton implements IAutomaton {
         //boolean doContinue;
 
         int iterationsCount = 0;
+        int currentIterationCount = 0;
+
+        stack.push((State) this.start);
+        ((State) this.start).setVisitIndex(this.currentStateIndex);
+        ((State) this.start).renew();
+        ((State) this.start).matches().add(new Match(stream, stream.position()));
 
         do {
             Stack<State> closure = new Stack<>();
 
             //++this.currentStateIndex;
+            ++currentIterationCount;
 
-            stack.push((State) this.start);
-            ((State) this.start).setVisitIndex(this.currentStateIndex);
-            ((State) this.start).renew();
-            ((State) this.start).matches().add(new Match(stream, stream.position()));
+            //stack.push((State) this.start);
+            //((State) this.start).setVisitIndex(this.currentStateIndex);
+            //((State) this.start).renew();
+            //((State) this.start).matches().add(new Match(stream, stream.position()));
 
             //doContinue = false;
 
@@ -109,15 +117,27 @@ public class Automaton implements IAutomaton {
 
                 closure.push(state);
 
+//                if (state.getIndex() == 5) {
+//                    System.out.println("ZZ");
+//                }
+
                 //System.out.println ("1: " + state.getIndex());
 
                 for (IEdge edge: state.getOutputEdges()) {
                     if (edge.getType() == EdgeType.EMPTY) {
                         State outState = (State) edge.getFinish();
 
+                        boolean prePass = true;
+
+                        if (outState.getType() == StateType.AND) {
+                            StateAnd outStateAnd = (StateAnd) outState;
+
+                            prePass = outStateAnd.visit(this.currentStateIndex, edge);
+                        }
+
                         //System.out.println("1: " + outState.getIndex());
 
-                        if (outState.getVisitIndex() != this.currentStateIndex) {
+                        if (outState.getVisitIndex() != this.currentStateIndex && prePass) {
                             outState.setVisitIndex(this.currentStateIndex);
 
                             //System.out.println("A: " + outState.getIndex() + " " + outState.getVisitIndex());
@@ -135,10 +155,12 @@ public class Automaton implements IAutomaton {
             }
 
             ++this.currentStateIndex;
+            ++currentIterationCount;
 
             //++currentPosition;
 
             //System.out.println("z: " + stream.current());
+
 
             while (!closure.empty()) {
                 State state = closure.pop();
@@ -160,7 +182,15 @@ public class Automaton implements IAutomaton {
 
                             //doContinue = true;
 
-                            if (outState.getVisitIndex() != this.currentStateIndex) {
+                            boolean prePass = true;
+
+                            if (outState.getType() == StateType.AND) {
+                                StateAnd outStateAnd = (StateAnd) outState;
+
+                                prePass = outStateAnd.visit(this.currentStateIndex, edge);
+                            }
+
+                            if (outState.getVisitIndex() != this.currentStateIndex && prePass) {
                                 outState.setVisitIndex(this.currentStateIndex);
 
                                 stack.push(outState);
@@ -173,10 +203,11 @@ public class Automaton implements IAutomaton {
             }
 
             //++this.currentStateIndex;
+            ++currentIterationCount;
 
             stream.next();
 
-            if (stream.atEnd()) {
+            if (stream.atEnd() || stack.empty()) {
                 iterationsCount++;
             }
 

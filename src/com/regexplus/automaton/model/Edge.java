@@ -11,6 +11,7 @@ public class Edge implements IEdge {
         this.start = start;
         this.finish = finish;
         this.start.getOutputEdges().add(this);
+        this.finish.getInputEdges().add(this);
     }
 
     public EdgeType getType() {

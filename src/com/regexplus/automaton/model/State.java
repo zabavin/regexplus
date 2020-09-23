@@ -10,18 +10,23 @@ import java.util.List;
 
 public class State implements IState {
     int index, visitIndex;
-    ArrayList<IEdge> outputEdges;
+    ArrayList<IEdge> inputEdges, outputEdges;
     List<IMatch> matches;
 
     public State() {
         this.index = -1;
         this.visitIndex = -1;
+        this.inputEdges = new ArrayList<>();
         this.outputEdges = new ArrayList<>();
         this.renew();
     }
 
     public StateType getType() {
         return StateType.EMPTY;
+    }
+
+    public List<IEdge> getInputEdges() {
+        return this.inputEdges;
     }
 
     public List<IEdge> getOutputEdges() {
@@ -57,12 +62,12 @@ public class State implements IState {
     }
 
     public void setMatches(List<IMatch> matches) {
-        //this.matches = new ArrayList<>();
+        this.matches = new ArrayList<>();
 
-        //for (IMatch match: matches) {
-        //    this.matches.add(match.copy());
-        //}
-        this.matches = matches;
+        for (IMatch match: matches) {
+            this.matches.add(match.copy());
+        }
+        //this.matches = matches;
     }
 
     public void renew() {

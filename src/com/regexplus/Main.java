@@ -1,16 +1,9 @@
 package com.regexplus;
 
-import com.regexplus.automaton.base.EdgeLetter;
-import com.regexplus.automaton.common.EdgeType;
-import com.regexplus.automaton.common.IEdge;
 import com.regexplus.automaton.common.IState;
-import com.regexplus.automaton.model.Edge;
-import com.regexplus.automaton.model.State;
 import com.regexplus.parser.Parser;
-import com.regexplus.parser.node.base.NodeRepeat;
 import com.regexplus.parser.node.common.INode;
 import com.regexplus.parser.node.model.Node;
-import com.regexplus.parser.node.base.NodeLetter;
 import com.regexplus.test.Case;
 import com.regexplus.test.CaseResult;
 
@@ -52,8 +45,41 @@ public class Main {
         }).test();
     }
 
+    static void testThree() {
+        String text = "(a*|aa)&aa"; //"(Hel+lo*)?|, Regex((Pl|us)!)";
+
+        INode node = Parser.ParseFromString(text);
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Debug/testThree-1.gv")));
+            Case.writeNode(bw, node);
+            bw.close();
+
+            bw = new BufferedWriter(new FileWriter(new File("C:/Debug/testThree-2.gv")));
+            IState[] start = new IState[1];
+            IState[] finish = new IState[1];
+
+            ((Node) node).expand(start, finish);
+
+            Case.writeState(bw, start[0]);
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void testFour() {
+        new Case("a*&a+", new CaseResult[] {
+                //new CaseResult("aa", 2),
+                new CaseResult("a", 1)
+        }).test();
+    }
+
     public static void main(String[] args) {
         testOne();
         testTwo();
+        testThree();
+        testFour();
     }
 }

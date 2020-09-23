@@ -9,7 +9,8 @@ import java.io.*;
 R =
     [A | (R)] [*, +, ?],
     R1 R2,
-    R1 | R2
+    R1 | R2,
+    R1 & R2
  */
 
 public class Parser {
@@ -41,7 +42,7 @@ public class Parser {
     }
 
     public boolean IsMeta() {
-        return ")*+?|".indexOf(this.getCurrent()) >= 0;
+        return ")*+?|&".indexOf(this.getCurrent()) >= 0;
     }
 
     protected INode ParseNode() {
@@ -152,9 +153,27 @@ public class Parser {
         return left;
     }
 
+    protected INode ParseAnd() {
+        INode left = this.ParseChoice();
+
+        if (left != null) {
+            if (!IsMeta() || getCurrent() == '&') {
+                this.getNext();
+
+                INode right = this.ParseAnd();
+
+                if (right != null) {
+                    return new NodeAnd(left, right);
+                }
+            }
+        }
+
+        return left;
+    }
+
     // public methods
     public INode Parse() {
-        return this.ParseChoice();
+        return this.ParseAnd();
     }
 
     public static INode ParseFromString(String text) {
