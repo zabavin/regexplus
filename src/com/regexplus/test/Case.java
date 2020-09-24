@@ -1,6 +1,7 @@
 package com.regexplus.test;
 
 import com.regexplus.automaton.base.EdgeLetter;
+import com.regexplus.automaton.base.EdgeSetLetter;
 import com.regexplus.automaton.common.EdgeType;
 import com.regexplus.automaton.common.IEdge;
 import com.regexplus.automaton.common.IState;
@@ -146,6 +147,7 @@ public class Case {
                     case MINUS -> bw.write("\tnode_" + ((Node) current).getIndex() + " [label=\"-\"]\n");
                     case ANY_LETTER -> bw.write("\tnode_" + ((Node) current).getIndex() + "[label=\".\"]\n");
                     case NOT -> bw.write("\tnode_" + ((Node) current).getIndex() + "[label=\"~\"]\n");
+                    case SET_LETTER -> bw.write("\tnode_" + ((Node) current).getIndex() + "[label=\"[]\"]\n");
                 }
 
                 if (!current.isAtomic()) {

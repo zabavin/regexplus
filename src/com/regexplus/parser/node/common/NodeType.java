@@ -9,5 +9,6 @@ public enum NodeType {
     AND,
     MINUS,
     ANY_LETTER,
-    NOT
+    NOT,
+    SET_LETTER
 }
