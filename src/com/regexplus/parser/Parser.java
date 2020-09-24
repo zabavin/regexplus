@@ -7,7 +7,7 @@ import java.io.*;
 
 /*
 R =
-    [A | (R) | "."] ["*", "+", "?"],
+    (A | ["~"] (R) | ".") ["*", "+", "?"],
     R1 R2,
     R1 | R2,
     R1 & R2
@@ -43,7 +43,7 @@ public class Parser {
     }
 
     public boolean IsMeta() {
-        return ")*+?|&-.".indexOf(this.getCurrent()) >= 0;
+        return ")*+?|&-.~".indexOf(this.getCurrent()) >= 0;
     }
 
     protected INode ParseNode() {
@@ -56,6 +56,9 @@ public class Parser {
         } else if (this.getCurrent() == '.') {
             this.getNext();
             node = new NodeAnyLetter();
+        } else if (this.getCurrent() == '~') {
+            this.getNext();
+            node = new NodeNot(this.ParseNode());
         } else {
             node = this.ParseLetter();
         }

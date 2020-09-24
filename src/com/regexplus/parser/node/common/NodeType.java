@@ -8,5 +8,6 @@ public enum NodeType {
     REPEAT,
     AND,
     MINUS,
-    ANY_LETTER
+    ANY_LETTER,
+    NOT
 }

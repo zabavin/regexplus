@@ -33,25 +33,25 @@ public class Case {
     }
 
     public void test() {
-        Automaton automaton = new Automaton();
-
-        automaton.build(new StringStream(this.pattern));
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Debug/pattern.gv")));
-
-            writeState(bw, automaton.getStart());
-
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         System.out.println("Case: " + this.pattern);
 
         boolean allTests = true;
 
         for (CaseResult caseResult: tests) {
+            Automaton automaton = new Automaton();
+
+            automaton.build(new StringStream(this.pattern));
+
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Debug/pattern.gv")));
+
+                writeState(bw, automaton.getStart());
+
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             String string = caseResult.getString();
 
             List<IMatch> matches = automaton.match(new StringStream(string));
@@ -145,6 +145,7 @@ public class Case {
                     case AND -> bw.write("\tnode_" + ((Node) current).getIndex() + " [label=\"&\"]\n");
                     case MINUS -> bw.write("\tnode_" + ((Node) current).getIndex() + " [label=\"-\"]\n");
                     case ANY_LETTER -> bw.write("\tnode_" + ((Node) current).getIndex() + "[label=\".\"]\n");
+                    case NOT -> bw.write("\tnode_" + ((Node) current).getIndex() + "[label=\"~\"]\n");
                 }
 
                 if (!current.isAtomic()) {

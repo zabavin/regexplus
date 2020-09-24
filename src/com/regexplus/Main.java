@@ -146,6 +146,39 @@ public class Main {
         }).test();
     }
 
+    static void testNine() {
+        String text = "~(a|b)"; //"(Hel+lo*)?|, Regex((Pl|us)!)";
+
+        INode node = Parser.ParseFromString(text);
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:/Debug/testNine-1.gv")));
+            Case.writeNode(bw, node);
+            bw.close();
+
+            bw = new BufferedWriter(new FileWriter(new File("C:/Debug/testNine-2.gv")));
+            IState[] start = new IState[1];
+            IState[] finish = new IState[1];
+
+            ((Node) node).expand(start, finish);
+
+            Case.writeState(bw, start[0]);
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void testTen() {
+        new Case("~(a|b)|c", new CaseResult[] {
+                //new CaseResult("aa", 2),
+                new CaseResult("b", 0),
+                new CaseResult("a", 0),
+                new CaseResult("c", 1)
+        }).test();
+    }
+
     public static void main(String[] args) {
         /*testOne();
         testTwo();
@@ -153,7 +186,9 @@ public class Main {
         testFour();*/
         //testFive();
         //testSix();
-        testSeven();
-        testEight();
+        //testSeven();
+        //testEight();
+        testNine();
+        testTen();
     }
 }
