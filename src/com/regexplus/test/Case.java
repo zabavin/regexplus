@@ -89,6 +89,7 @@ public class Case {
                     case EMPTY -> bw.write("\tnode_" + ((State) current).getIndex() + " [label=\"" + ((State) current).getIndex() + "\"]\n");
                     case FINAL -> bw.write("\tnode_" + ((State) current).getIndex() + " [label=\"^ " + ((State) current).getIndex() + "\"]\n");
                     case AND -> bw.write("\tnode_" + ((State) current).getIndex() + " [label=\"& " + ((State) current).getIndex() + "\"]\n");
+                    case MINUS -> bw.write("\tnode_" + ((State) current).getIndex() + " [label=\"- " + ((State) current).getIndex() + "\"]\n");
                 }
 
                 List<IEdge> edges = current.getOutputEdges();
@@ -142,6 +143,7 @@ public class Case {
                             ((NodeRepeat) current).getRepeatType().toString()
                             + "\"]\n");
                     case AND -> bw.write("\tnode_" + ((Node) current).getIndex() + " [label=\"&\"]\n");
+                    case MINUS -> bw.write("\tnode_" + ((Node) current).getIndex() + " [label=\"-\"]\n");
                 }
 
                 if (!current.isAtomic()) {

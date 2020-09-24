@@ -11,6 +11,7 @@ R =
     R1 R2,
     R1 | R2,
     R1 & R2
+    R1 - R2
  */
 
 public class Parser {
@@ -42,7 +43,7 @@ public class Parser {
     }
 
     public boolean IsMeta() {
-        return ")*+?|&".indexOf(this.getCurrent()) >= 0;
+        return ")*+?|&-".indexOf(this.getCurrent()) >= 0;
     }
 
     protected INode ParseNode() {
@@ -171,9 +172,28 @@ public class Parser {
         return left;
     }
 
+    protected INode ParseMinus() {
+        INode left = this.ParseAnd();
+
+        if (left != null) {
+            if (!IsMeta() || getCurrent() == '-') {
+                this.getNext();
+
+                INode right = this.ParseMinus();
+
+                if (right != null) {
+                    return new NodeMinus(left, right);
+                }
+            }
+        }
+
+        return left;
+    }
+
+
     // public methods
     public INode Parse() {
-        return this.ParseAnd();
+        return this.ParseMinus();
     }
 
     public static INode ParseFromString(String text) {

@@ -1,9 +1,6 @@
 package com.regexplus.automaton.model;
 
-import com.regexplus.automaton.base.EdgeLetter;
-import com.regexplus.automaton.base.StateAnd;
-import com.regexplus.automaton.base.StateFinal;
-import com.regexplus.automaton.base.StateStart;
+import com.regexplus.automaton.base.*;
 import com.regexplus.automaton.common.*;
 import com.regexplus.match.common.IMatch;
 import com.regexplus.match.model.Match;
@@ -135,6 +132,13 @@ public class Automaton implements IAutomaton {
                             prePass = outStateAnd.visit(this.currentStateIndex, edge);
                         }
 
+                        if (outState.getType() == StateType.MINUS) {
+                            StateMinus outStateMinus = (StateMinus) outState;
+
+                            prePass = outStateMinus.visit(this.currentStateIndex, edge);
+                        }
+
+
                         //System.out.println("1: " + outState.getIndex());
 
                         if (outState.getVisitIndex() != this.currentStateIndex && prePass) {
@@ -188,6 +192,12 @@ public class Automaton implements IAutomaton {
                                 StateAnd outStateAnd = (StateAnd) outState;
 
                                 prePass = outStateAnd.visit(this.currentStateIndex, edge);
+                            }
+
+                            if (outState.getType() == StateType.MINUS) {
+                                StateMinus outStateMinus = (StateMinus) outState;
+
+                                prePass = outStateMinus.visit(this.currentStateIndex, edge);
                             }
 
                             if (outState.getVisitIndex() != this.currentStateIndex && prePass) {

@@ -6,5 +6,6 @@ public enum NodeType {
     CONCAT,
     CHOICE,
     REPEAT,
-    AND
+    AND,
+    MINUS
 }

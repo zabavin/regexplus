@@ -4,5 +4,6 @@ public enum StateType {
     FINAL,
     EMPTY,
     START,
-    AND
+    AND,
+    MINUS
 }
