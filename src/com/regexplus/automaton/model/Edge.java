@@ -25,4 +25,8 @@ public class Edge implements IEdge {
     public IState getFinish() {
         return this.finish;
     }
+
+    public boolean accepts(char letter) {
+        return false;
+    }
 }

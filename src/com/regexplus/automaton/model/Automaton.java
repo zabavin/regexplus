@@ -181,7 +181,7 @@ public class Automaton implements IAutomaton {
 
                         //System.out.println("2: " + (char)edgeLetter.getLetter() + " " + (char)stream.current());
 
-                        if (edgeLetter.getLetter() == stream.current()) {
+                        if (edgeLetter.accepts((char) stream.current())) {
                             State outState = (State) edgeLetter.getFinish();
 
                             //doContinue = true;

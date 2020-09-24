@@ -20,4 +20,9 @@ public class EdgeLetter extends Edge {
     public char getLetter() {
         return this.letter;
     }
+
+    @Override
+    public boolean accepts(char letter) {
+        return this.letter == letter;
+    }
 }

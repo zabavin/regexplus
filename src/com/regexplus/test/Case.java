@@ -144,6 +144,7 @@ public class Case {
                             + "\"]\n");
                     case AND -> bw.write("\tnode_" + ((Node) current).getIndex() + " [label=\"&\"]\n");
                     case MINUS -> bw.write("\tnode_" + ((Node) current).getIndex() + " [label=\"-\"]\n");
+                    case ANY_LETTER -> bw.write("\tnode_" + ((Node) current).getIndex() + "[label=\".\"]\n");
                 }
 
                 if (!current.isAtomic()) {

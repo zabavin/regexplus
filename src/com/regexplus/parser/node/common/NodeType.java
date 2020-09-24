@@ -7,5 +7,6 @@ public enum NodeType {
     CHOICE,
     REPEAT,
     AND,
-    MINUS
+    MINUS,
+    ANY_LETTER
 }
