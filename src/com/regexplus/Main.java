@@ -215,17 +215,17 @@ public class Main {
 
 
     public static void main(String[] args) {
-        testOne();
+        //testOne();
         testTwo();
-        testThree();
-        testFour();
-        testFive();
-        testSix();
-        testSeven();
-        testEight();
-        testNine();
-        testTen();
-        testEleven();
-        testTwelfth();
+        //testThree();
+        //testFour();
+        //testFive();
+        //testSix();
+        //testSeven();
+        //testEight();
+        //testNine();
+        //testTen();
+        //testEleven();
+        //testTwelfth();
     }
 }

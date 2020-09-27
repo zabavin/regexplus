@@ -1,7 +1,6 @@
 package com.regexplus.test;
 
 import com.regexplus.automaton.base.EdgeLetter;
-import com.regexplus.automaton.base.EdgeSetLetter;
 import com.regexplus.automaton.common.EdgeType;
 import com.regexplus.automaton.common.IEdge;
 import com.regexplus.automaton.common.IState;
