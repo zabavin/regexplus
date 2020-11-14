@@ -213,19 +213,29 @@ public class Main {
         }).test();
     }
 
+    static void testThirteenth() {
+        new Case("~(ab-cd)", new CaseResult[] {
+                //new CaseResult("aa", 2),
+                new CaseResult("ab", 1),
+                new CaseResult("cd", 2),
+                new CaseResult("abcd", 4)
+        }).test();
+    }
+
 
     public static void main(String[] args) {
-        //testOne();
+        testOne();
         testTwo();
-        //testThree();
-        //testFour();
-        //testFive();
-        //testSix();
-        //testSeven();
-        //testEight();
-        //testNine();
-        //testTen();
-        //testEleven();
-        //testTwelfth();
+        testThree();
+        testFour();
+        testFive();
+        testSix();
+        testSeven();
+        testEight();
+        testNine();
+        testTen();
+        testEleven();
+        testTwelfth();
+        testThirteenth();
     }
 }
