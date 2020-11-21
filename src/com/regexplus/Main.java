@@ -222,6 +222,12 @@ public class Main {
         }).test();
     }
 
+    static void testFourteenth() {
+        // due to S.M. Kearns
+        new Case("(ab|abb)(ba&a)", new CaseResult[] {
+                new CaseResult("abba", 4)
+        }).test();
+    }
 
     public static void main(String[] args) {
         testOne();
@@ -237,5 +243,6 @@ public class Main {
         testEleven();
         testTwelfth();
         testThirteenth();
+        testFourteenth();
     }
 }
