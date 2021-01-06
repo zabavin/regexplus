@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="regexplus:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/regexplus_jar</output-path>
+    <root id="archive" name="regexplus.jar">
+      <element id="module-output" name="regexplus" />
+    </root>
+  </artifact>
+</component>

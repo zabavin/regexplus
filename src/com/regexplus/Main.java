@@ -1,6 +1,9 @@
 package com.regexplus;
 
 import com.regexplus.automaton.common.IState;
+import com.regexplus.automaton.model.Automaton;
+import com.regexplus.automaton.model.StringStream;
+import com.regexplus.match.common.IMatch;
 import com.regexplus.parser.Parser;
 import com.regexplus.parser.node.common.INode;
 import com.regexplus.parser.node.model.Node;
@@ -8,6 +11,7 @@ import com.regexplus.test.Case;
 import com.regexplus.test.CaseResult;
 
 import java.io.*;
+import java.util.List;
 
 public class Main {
     static void testOne() {
@@ -229,7 +233,27 @@ public class Main {
         }).test();
     }
 
+    public static String readFile(String path) {
+        StringBuilder content = new StringBuilder();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            int c;
+
+            while ((c = br.read()) != -1) {
+                content.append((char) c);
+            }
+
+            br.close();
+        } catch (Exception e) {
+            return null;
+        }
+
+        return content.toString();
+    }
+
     public static void main(String[] args) {
+        /*
         testOne();
         testTwo();
         testThree();
@@ -244,5 +268,35 @@ public class Main {
         testTwelfth();
         testThirteenth();
         testFourteenth();
+        */
+
+        if (args.length != 2) {
+            System.out.println("Regex+ - Usage: <pattern> <file name>");
+
+            System.out.println("Syntax:");
+            System.out.println("R = ");
+            System.out.println("        (A | [\"~\"] /* complement */ (R) | \".\" | \"[\" A* \"]\") [\"*\", \"+\", \"?\"],");
+            System.out.println("            R1 R2,");
+            System.out.println("            R1 | R2,");
+            System.out.println("            R1 & R2 /* intersection */");
+            System.out.println("            R1 - R2 /* subtraction */");
+
+            return;
+        }
+
+        String pattern = args[0];
+        String string = readFile(args[1]);
+
+        Automaton automaton = new Automaton();
+
+        automaton.build(new StringStream(pattern));
+
+        if (automaton.matches(new StringStream(string))) {
+            List<IMatch> matches = automaton.match(new StringStream(string));
+
+            System.out.println(string.substring(matches.get(0).start(), matches.get(0).start() + matches.get(0).length()));
+        } else {
+            System.out.println("No match");
+        }
     }
 }
